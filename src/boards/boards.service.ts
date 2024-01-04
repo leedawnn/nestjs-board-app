@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Board, BoardStatus } from './board.model';
 import { v1 as uuid } from 'uuid';
+import { CreateBoardDto } from './dto/create-board.dto';
 
 @Injectable()
 export class BoardsService {
@@ -11,15 +12,21 @@ export class BoardsService {
     return this.boards;
   }
 
-  createBoard(title: string, desription: string) {
+  createBoard(createBoardDto: CreateBoardDto) {
+    const { title, description } = createBoardDto;
+
     const board: Board = {
       id: uuid(),
       title,
-      desription,
+      description,
       status: BoardStatus.PUBLIC,
     };
 
     this.boards.push(board); // 생성 기능이니까 boards 안에 넣어줘야겠지?
     return board; // board 리턴값
+  }
+
+  getBoardById(id: string): Board {
+    return this.boards.find((board) => id === board.id);
   }
 }

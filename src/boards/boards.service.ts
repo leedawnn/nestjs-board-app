@@ -29,4 +29,14 @@ export class BoardsService {
   getBoardById(id: string): Board {
     return this.boards.find((board) => id === board.id);
   }
+
+  deleteBoard(id: string): void {
+    this.boards = this.boards.filter((board) => board.id !== id); // 삭제는 return값이 없어도 됨,,,
+  }
+
+  updateBoardStatus(id: string, status: BoardStatus): Board {
+    const board = this.getBoardById(id); // 특정 id값의 게시물을 가져와서 status만 변경하고 return!
+    board.status = status;
+    return board;
+  }
 }
